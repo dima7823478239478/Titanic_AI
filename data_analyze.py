@@ -1,6 +1,8 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn import preprocessing
+from sklearn.preprocessing import StandardScaler
 import sys
 
 train_data_csv_path = ("/Users/dmitrii/PycharmProjects/Titanic_AI_project/titanic/train.csv")
@@ -69,12 +71,18 @@ correlation_matrix = row_train_data.corr()
 high_corr = correlation_matrix[abs(correlation_matrix) > 0.5]
 print("Вся матрица корреляций:\n",high_corr)
 
+x = row_train_data
+min_max_scaler = preprocessing.MinMaxScaler()
+x_scaled = min_max_scaler.fit_transform(x)
+df_normalized  = pd.DataFrame(x_scaled)
+print(df_normalized)#дата с нормализацией для модели лог регрессии
 
 
 # Базовое сохранение (с индексами)
 row_train_data.to_csv('data_clean.csv')
+df_normalized.to_csv('data_clean_normal.csv')
 
-plt.show()
+#plt.show()
 
 
 

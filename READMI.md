@@ -54,4 +54,13 @@ Some children travelled only with a nanny, therefore parch=0 for them.'''''
 
 
 ## My Decision
-I will use logistic regression and there are 2 classes: 1 for survived, 0 for deceased
+I will use logistic regression and there are 2 classes: 1 for survived, 0 for deceased.
+    
+I create these models and compare accuracy, results:
+
+* Random forest - 0.904
+* Logistic regression - 0.781
+* KNN - 0.691
+* SVM - 0.794
+* GradientBoostingClassifier - 0.829
+

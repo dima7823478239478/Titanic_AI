@@ -13,7 +13,7 @@ y = data[['Survived']]
 
 # Генерируем синтетические данные
 X, y = make_classification(n_samples=1000, n_features=7, random_state=42)
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
 # Инициализация и обучение модели
 rf_model = RandomForestClassifier(
@@ -39,7 +39,7 @@ fpr, tpr, _ = metrics.roc_curve(y_test,  y_pred)
 plt.plot(fpr, tpr)
 plt.ylabel('True Positive Rate')
 plt.xlabel('False Positive Rate')
-plt.show()
+#plt.show()
 auc = metrics.roc_auc_score(y_test, y_pred)
 print("AUC: %.3f" % auc)
 print(f"Accuracy: {accuracy:.3f}")
