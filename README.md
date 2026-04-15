@@ -58,9 +58,17 @@ I will use logistic regression and there are 2 classes: 1 for survived, 0 for de
     
 I create these models and compare accuracy, results:
 
-* Random forest - 0.904
+* Random forest - 0.798(Changed cause syntetic data)
 * Logistic regression - 0.781
 * KNN - 0.691
 * SVM - 0.794
 * GradientBoostingClassifier - 0.829
+* CatBoost - 0.825
+* LightGBM - 0.825
+* AdaBoost - 0.789(very unstable)
+* XGBoost - 0.812
+
+## Ensemble
+I'll create ensemble of the most accurate models. 
+* Here soon will be results about final accuracy.
 
