@@ -62,13 +62,23 @@ I create these models and compare accuracy, results:
 * Logistic regression - 0.781
 * KNN - 0.691
 * SVM - 0.794
-* GradientBoostingClassifier - 0.829
-* CatBoost - 0.825
-* LightGBM - 0.825
+* GradientBoostingClassifier - 0.830
+* CatBoost - 0.830(updated with new features in data)
+* LightGBM - 0.830(updated with new features in data)
 * AdaBoost - 0.789(very unstable)
 * XGBoost - 0.812
+* Ensemble(GradientBoostingClassifier, CatBoost, LightGBM) with soft voting - 0.825
+* Ensemble(GradientBoostingClassifier, CatBoost, LightGBM) with hard voting - 0.821
 
 ## Ensemble
 I'll create ensemble of the most accurate models. 
-* Here soon will be results about final accuracy.
+There are GradientBoostingClassifier, CatBoost, LightGBM(choice based on accuracy).
+* accuracy in ensemble with soft voting: 0.825
+* accuracy in ensemble with hard voting: 0.821
+
+Ensemble of strongest models didn't improve accuracy(even didn't beat GradientBoostingClassifier).
+
+## My ideas and realization:
+* Idea: Ensemble - Realization: Didn't improve accuracy. Final accuracy - 0.825
+* Idea: Feature Engineering - Realization: I tested new data on GradientBoostingClassifier, CatBoost, LightGBM and got such results:GradientBoostingClassifier - 0.821, CatBoost - 0.830, LightGBM - 0.830.(2 of 3 models became more accurate!)
 

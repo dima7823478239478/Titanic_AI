@@ -5,7 +5,7 @@ from catboost import CatBoostClassifier
 
 
 
-data = pd.read_csv('/Users/dmitrii/PycharmProjects/Titanic_AI_project/data_clean.csv')
+data = pd.read_csv('/Users/dmitrii/PycharmProjects/Titanic_AI_project/data_clean_fe.csv')
 X = data.drop(['Survived'], axis=1)
 y = data['Survived']
 

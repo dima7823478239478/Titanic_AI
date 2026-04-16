@@ -1,23 +1,17 @@
 import pandas as pd
-import numpy as np
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score
+from sklearn.metrics import accuracy_score, roc_auc_score
 from sklearn.model_selection import train_test_split
 import lightgbm as lgb
 
-data = pd.read_csv('/Users/dmitrii/PycharmProjects/Titanic_AI_project/data_clean.csv')
+data = pd.read_csv('/Users/dmitrii/PycharmProjects/Titanic_AI_project/data_clean_fe.csv')
 
-# Удаляем лишнюю колонку Unnamed: 0 (индекс)
 if 'Unnamed: 0' in data.columns:
     data = data.drop(['Unnamed: 0'], axis=1)
 
-# Теперь X и y
 X = data.drop(['Survived'], axis=1)
 y = data['Survived']
 
-#переименовываем колонки в безопасные имена
 X.columns = [f"col_{i}" for i in range(X.shape[1])]
-print("Новые имена колонок:", X.columns.tolist())
-
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
 
@@ -26,7 +20,7 @@ valid_data = lgb.Dataset(X_test, label=y_test, reference=train_data)
 
 params = {
     "objective": "binary",
-    "metric": ["auc", "binary_logloss"],
+    "metric": "auc",
     "boosting_type": "gbdt",
     "learning_rate": 0.05,
     "num_leaves": 31,
@@ -46,12 +40,11 @@ model = lgb.train(
     num_boost_round=1000,
     valid_sets=[train_data, valid_data],
     valid_names=["train", "valid"],
-    callbacks=[lgb.early_stopping(50)]
+    callbacks=[lgb.early_stopping(30)]
 )
 
 y_pred_prob = model.predict(X_test, num_iteration=model.best_iteration)
 y_pred = (y_pred_prob > 0.5).astype(int)
 
 accuracy = accuracy_score(y_test, y_pred)
-
 print(f"Accuracy: {accuracy:.3f}")
