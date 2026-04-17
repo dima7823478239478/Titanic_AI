@@ -58,15 +58,15 @@ I will use logistic regression and there are 2 classes: 1 for survived, 0 for de
     
 I create these models and compare accuracy, results:
 
-* Random forest - 0.798(Changed cause syntetic data)
-* Logistic regression - 0.781
-* KNN - 0.691
-* SVM - 0.794
-* GradientBoostingClassifier - 0.830
-* CatBoost - 0.830(updated with new features in data)
-* LightGBM - 0.830(updated with new features in data)
-* AdaBoost - 0.789(very unstable)
-* XGBoost - 0.812
+* Random forest(Random_Forest_Model.py) - 0.798(Changed cause syntetic data)
+* Logistic regression(log_regression.py) - 0.781
+* KNN(KNN.py) - 0.691
+* SVM(SVM.py) - 0.794(too long time)
+* GradientBoostingClassifier(Gradient_Boosting.py) - 0.830
+* CatBoost(CatBoost.py) - 0.830(updated with new features in data)
+* LightGBM(LightGBM.py) - 0.830(updated with new features in data)
+* AdaBoost(AdaBoost.py) - 0.789(very unstable)
+* XGBoost(XGBoost.py) - 0.812
 * Ensemble(GradientBoostingClassifier, CatBoost, LightGBM) with soft voting - 0.825
 * Ensemble(GradientBoostingClassifier, CatBoost, LightGBM) with hard voting - 0.821
 
@@ -79,6 +79,21 @@ There are GradientBoostingClassifier, CatBoost, LightGBM(choice based on accurac
 Ensemble of strongest models didn't improve accuracy(even didn't beat GradientBoostingClassifier).
 
 ## My ideas and realization:
-* Idea: Ensemble - Realization: Didn't improve accuracy. Final accuracy - 0.825
-* Idea: Feature Engineering - Realization: I tested new data on GradientBoostingClassifier, CatBoost, LightGBM and got such results:GradientBoostingClassifier - 0.821, CatBoost - 0.830, LightGBM - 0.830.(2 of 3 models became more accurate!)
+* Idea: Ensemble - Realization: Didn't improve accuracy. Final accuracy - 0.825(ensemble_1.py)
+* Idea: Feature Engineering - Realization: I tested new data on GradientBoostingClassifier, CatBoost, LightGBM and got such results:GradientBoostingClassifier - 0.821, CatBoost - 0.830, LightGBM - 0.830.(2 of 3 models became more accurate!) check Feature_engineering.py
+* Idea: Stacking with difference models(for using their other errors). - Realization: I tested such variety of models and got such results: GradientBoostingClassifier + Random Forest + Logistic Regression + SVM + KNN = 0.812(too long cause SVM), GradientBoostingClassifier + Random Forest + Logistic Regression + KNN = 0.803, GradientBoostingClassifier + Random Forest + Logistic Regression = 0.803. check stacking.py
+* Idea: Choose most accurate model(GradientBoostingClassifier, CatBoost, LightGBM), they have similar rating in accuracy. - Realization: 1st - compare ROC AUC, 2nd - compare Precision-Recall, 3rd - A/B testing. check Gradient_Boosting.py, LightGBM.py, CatBoost.py
 
+## Tournament between best models(GradientBoostingClassifier, CatBoost, LightGBM).
+* 1st(compare ROC AUC) - 0.849, 0.840, 0.876 respectively.
+* 2nd(compare Precision-Recall) - 0.806-0.707, 0.789-0.732, 0.797-0.720 respectively.
+* 3rd(A/B testing) - 0.8178 (+/- 0.0104), 0.8200 (+/- 0.0119), 0.8110 (+/- 0.0128) respectively.
+
+## Final decision!
+* LightGBM was chosen as most accurate, because it has biggest ROC AUC and fastest among other models.
+
+## Realization for kaggle.
+* Run file submission_LightGBM.py after you will get file submission.csv. Upload it on kaggle.
+
+## Results: 
+# Score: 0.77751

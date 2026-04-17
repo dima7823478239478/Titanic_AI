@@ -1,7 +1,8 @@
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, recall_score
 import pandas as pd
+from sklearn.model_selection import cross_val_score, KFold
 from sklearn.model_selection import RandomizedSearchCV
 from scipy.stats import randint, uniform
 
@@ -17,5 +18,17 @@ model = GradientBoostingClassifier(learning_rate=0.01, max_depth=4, min_samples_
 
 model.fit(X_train, y_train)
 
+y_pred_proba = model.predict_proba(X_test)[:, 1]
 y_pred = model.predict(X_test)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
 print(f"Accuracy: {accuracy_score(y_test, y_pred):.3f}")
+print(f"ROC AUC: {roc_auc_score(y_test, y_pred_proba):.3f}")
+print(f"precision recall: {precision:.3f}-{recall:.3f}")
+
+
+
+kfold = KFold(n_splits=5, shuffle=True, random_state=42)
+
+scores = cross_val_score(model, X, y, cv=kfold, scoring='accuracy')
+print(f"{scores.mean():.4f} (+/- {scores.std():.4f})")

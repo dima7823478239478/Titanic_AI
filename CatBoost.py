@@ -1,7 +1,8 @@
 import pandas as pd
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_auc_score
 from sklearn.model_selection import train_test_split
 from catboost import CatBoostClassifier
+from sklearn.model_selection import cross_val_score, KFold
 
 
 
@@ -16,9 +17,19 @@ model = CatBoostClassifier(loss_function='Logloss', random_state=42, random_stre
 model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
+y_pred_proba = model.predict_proba(X_test)[:, 1]
 
 accuracy = accuracy_score(y_test, y_pred)
-print('accuracy: ', accuracy)
+precision = precision_score(y_test, y_pred)
+recall = recall_score(y_test, y_pred)
+print(f'accuracy: {accuracy:.3f}')
+print(f"ROC AUC: {roc_auc_score(y_test, y_pred_proba):.3f}")
+print(f"precision recall: {precision:.3f}-{recall:.3f}")
+
+kfold = KFold(n_splits=5, shuffle=True, random_state=42)
+
+scores = cross_val_score(model, X, y, cv=kfold, scoring='accuracy')
+print(f"{scores.mean():.4f} (+/- {scores.std():.4f})")
 
 
 
