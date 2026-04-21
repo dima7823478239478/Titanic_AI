@@ -1,4 +1,5 @@
 ## Titanic - Machine Learning from Disaster
+* https://www.kaggle.com/competitions/titanic
 Start here! Predict survival on the Titanic and get familiar with ML basics
 Description
 👋🛳️ Ahoy, welcome to Kaggle! You’re in the right place.
@@ -95,5 +96,6 @@ Ensemble of strongest models didn't improve accuracy(even didn't beat GradientBo
 ## Realization for kaggle.
 * Run file submission_LightGBM.py after you will get file submission.csv. Upload it on kaggle.
 
-## Results: 
+![img.png](img.png)
 # Score: 0.77751
+# Result on Kaggle: 0.77751 (top ~12%)

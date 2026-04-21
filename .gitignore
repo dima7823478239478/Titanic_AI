@@ -31,6 +31,7 @@ titanic
 .idea
 catboost_info/
 *.joblib
+*.png
 
 
 
